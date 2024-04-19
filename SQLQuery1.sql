@@ -1,0 +1,75 @@
+CREATE DATABASE [db_academy_19.04]
+GO
+USE [db_academy_19.04]
+GO
+
+CREATE TABLE Departments (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+	Building NVARCHAR(50),
+    Financing MONEY NOT NULL DEFAULT 0,
+    Name NVARCHAR(100) UNIQUE NOT NULL,
+    FacultyId INT NOT NULL
+);
+
+CREATE TABLE Faculties (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE Groups (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(10) NOT NULL UNIQUE,
+    Year INT NOT NULL CHECK (Year BETWEEN 1 AND 5),
+    DepartmentId INT NOT NULL
+);
+
+CREATE TABLE Students (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(50) NOT NULL UNIQUE,
+    Rating FLOAT,
+    Surname NVARCHAR(50) NOT NULL
+);
+
+CREATE TABLE GroupsStudents (
+	Id INT PRIMARY KEY IDENTITY(1,1),
+	GroupId INT NOT NULL,
+	StudentId INT NOT NULL
+);
+
+CREATE TABLE Lectures (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Date DATE,
+    SubjectId INT NOT NULL,
+    TeacherId INT NOT NULL
+);
+
+CREATE TABLE GroupsLectures (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    GroupId INT NOT NULL,
+    LectureId INT NOT NULL
+);
+
+CREATE TABLE Curators (
+	Id INT PRIMARY KEY IDENTITY(1,1),
+	Name NVARCHAR(MAX) NOT NULL,
+	Surname NVARCHAR(MAX) NOT NULL
+);
+
+CREATE TABLE GroupsCurators (
+	Id INT PRIMARY KEY IDENTITY(1,1),
+	CuratorId INT NOT NULL,
+	GroupId INT NOT NULL
+);
+
+CREATE TABLE Subjects (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE Teachers (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+	IsProfessor BIT, -- Assuming 'IsProfessor' indicates whether the teacher is a professor or not
+    Name NVARCHAR(MAX) NOT NULL,
+    Salary MONEY NOT NULL CHECK (Salary > 0),
+    Surname NVARCHAR(MAX) NOT NULL
+);
